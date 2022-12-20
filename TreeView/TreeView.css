@@ -1,0 +1,31 @@
+* {
+    box-sizing: border-box;
+}
+ul {
+    list-style-type: none;
+    cursor: pointer;
+}
+li.leaf 
+{
+    font-size: small;
+}
+li.leaf::before{
+    content: '🖥️';
+}
+li.folder::before{
+    content: '📁';
+}
+li.folder {
+    font-weight: bold;
+    color: blue;
+}
+li.leaf{
+    font-weight: normal;
+    color: black;
+}
+.hidden {
+    display: none;
+}
+.selected {
+    background-color: grey;
+}
