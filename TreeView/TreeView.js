@@ -2,65 +2,93 @@
 class TreeView {
     constructor(){
         // data
-        this.items = [
+        const demoJsonData = `
+        [
             {
-                name: "w0",
-                isGroup: false,
+                "name": "server1",
+                "isGroup": false,
+                "fqdn": "server1.example.com"
             },
             {
-                name: "shib",
-                isGroup: true,
-                items:[
-                   {
-                        name: "prod",
-                        isGroup: true,
-                        items:[
+                "name": "web servers",
+                "isGroup": true,
+                "items":
+                [
+                    {
+                        "name": "prod",
+                        "isGroup": true,
+                        "items":
+                        [
                             {
-                                name: "login4",
-                                isGroup: false,
+                                "name": "web1",
+                                "isGroup": false,
+                                "items": []
                             },
                             {
-                                name: "login5",
-                                isGroup: false,
-                            },
-                            {
-                                name: "login10",
-                                isGroup: false,
-                            },
+                                "name": "web2",
+                                "isGroup": false,
+                                "items": []
+                            }
                         ]
-                   },
-                   {
-                        name: "uat",
-                        isGroup: true,
-                        items:[
+                    },
+                    {
+                        "name": "uat",
+                        "isGroup": true,
+                        "items":
+                        [
                             {
-                                name: "login11",
-                                isGroup: false,
-                            },
+                                "name": "web3",
+                                "isGroup": false,
+                                "items": []
+                            }
                         ]
-                   },
-                   {
-                        name: "dev",
-                        isGroup: true,
-                        items:[
-                            {
-                                name: "login6",
-                                isGroup: false,
-                            },
-                            {
-                                name: "login8",
-                                isGroup: false,
-                            },
-                        ]
-                   },
+                    }
                 ]
             },
             {
-                name: "isops",
-                isGroup: false,
+                "name": "db servers",
+                "isGroup": true,
+                "items":
+                [
+                    {
+                        "name": "prod",
+                        "isGroup": true,
+                        "items":
+                        [
+                            {
+                                "name": "db1",
+                                "isGroup": false,
+                                "items": []
+                            },
+                            {
+                                "name": "db2",
+                                "isGroup": false,
+                                "items": []
+                            }
+                        ]
+                    },
+                    {
+                        "name": "uat",
+                        "isGroup": true,
+                        "items":
+                        [
+                            {
+                                "name": "db3",
+                                "isGroup": false,
+                                "items": []
+                            }
+                        ]
+                    }
+                ]
             },
-        ];
-
+            {
+                "name": "server2",
+                "isGroup": false
+            }
+        ]
+        `;
+        // load demo data
+        this.loadJsonData(demoJsonData);
         // ui
         this.folderCssClass = "folder";
         this.leafCssClass = "leaf";
@@ -71,20 +99,23 @@ class TreeView {
         this.onLeafClick = null;
         this.onFolderClick = null;
     }
-    open(parentElement){
+    loadJsonData(jsonData) {
+        this.items = JSON.parse(jsonData);
+    }
+
+    open(parentElement) {
         this.parentElement = parentElement;
         this.#createUi(parentElement);
         this.#setupEvents();
     }
 
-    #createUi(parentElement)
-    {
-        let groups = [{name: "noname", items: this.items, _uiParent_ : parentElement,}]; // a single group at start
+    #createUi(parentElement) {
+        let groups = [{ name: "noname", items: this.items, _uiParent_: parentElement, }]; // a single group at start
         let nextGroups = [];
 
         while (groups.length !== 0) {
             // for each group
-            groups.forEach((group)=>{
+            groups.forEach((group) => {
                 const ulE = document.createElement("ul");
                 // for each item in this group
                 group.items.forEach((item) => {
@@ -108,15 +139,14 @@ class TreeView {
         }
     }
 
-    #setupEvents()
-    {
+    #setupEvents() {
         //group name onclick
         const groupNameEs = document.querySelectorAll("span.folderName");
         groupNameEs.forEach((groupNameE) => {
             groupNameE.addEventListener("click", (e) => {
                 groupNameE.parentElement.querySelector('ul').classList.toggle('hidden');
                 e.stopPropagation();
-                if(this.onFolderClick){
+                if (this.onFolderClick) {
                     this.onFolderClick(groupNameE.innerHTML);
                 }
             });
@@ -129,7 +159,7 @@ class TreeView {
                 leafNameEs.forEach((leafNameE) => { leafNameE.classList.remove("selected"); });
                 leafNameE.classList.add("selected");
                 e.stopPropagation();
-                if(this.onLeafClick){
+                if (this.onLeafClick) {
                     this.onLeafClick(leafNameE.innerHTML);
                 }
             });

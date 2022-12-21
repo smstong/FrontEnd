@@ -11,16 +11,42 @@
         window.onload = function(){
             const tree = new TreeView();
             tree.onLeafClick = (name)=>{
-                alert(`clicked on ${name}`);
+                screenE = document.querySelector("#screen");
+                screenE.innerHTML = `clicked on ${name}`;
             };
             tree.onFolderClick = (name)=>{
             };
-            tree.open(document.getElementById("div1"));
+            tree.open(document.getElementById("treeDiv"));
         };
     </script>
+    <style>
+        div {
+            background-color: aliceblue;
+        }
+        #treeDiv{
+            flex-basis: 200px;
+            overflow-x:scroll;
+            height: 400px;
+        }
+        #screen{
+            flex-grow: 10;
+            background-color: black;
+            color: white;
+        }
+        .flex-container {
+            display: flex;
+            background-color: aqua;
+        }
+    </style>
 </head>
 <body>
-    <div id="div1">
+    <div class="flex-container">
+        <div id="treeDiv">
+        </div>
+        <div id="screen">
+            screen
+        </div>
     </div>
 </body>
+
 </html>
