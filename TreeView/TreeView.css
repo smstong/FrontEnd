@@ -1,3 +1,7 @@
+/* 
+class naming standard: xq-tree-xxx
+namespace: xq-tree
+*/
 * {
     box-sizing: border-box;
 }
@@ -5,27 +9,36 @@ ul {
     list-style-type: none;
     cursor: pointer;
 }
-li.leaf 
-{
+
+/* leaf nodes */
+li.xq-tree-leaf {
     font-size: small;
-}
-li.leaf::before{
-    content: '🖥️';
-}
-li.folder::before{
-    content: '📁';
-}
-li.folder {
-    font-weight: bold;
-    color: blue;
-}
-li.leaf{
     font-weight: normal;
     color: black;
 }
-.hidden {
+li.xq-tree-leaf::before{
+    content: '🖥️';
+}
+span.xq-tree-leafName {
+    font-weight: normal;
+}
+
+/* folder nodes */
+li.xq-tree-folder::before{
+    content: '📁';
+}
+li.xq-tree-folder {
+    font-weight: bold;
+    color: blue;
+}
+span.xq-tree-folderName {
+    font-weight: bold;
+}
+
+/* general */
+.xq-tree-hidden {
     display: none;
 }
-.selected {
+.xq-tree-selected {
     background-color: grey;
 }

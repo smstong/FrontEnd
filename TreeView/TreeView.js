@@ -89,11 +89,14 @@ class TreeView {
         `;
         // load demo data
         this.loadJsonData(demoJsonData);
-        // ui
-        this.folderCssClass = "folder";
-        this.leafCssClass = "leaf";
-        this.folderNameCssClass = "folderName";
-        this.leafNameCssClass = "leafName";
+
+        // css class names 
+        this.folderCssClass = "xq-tree-folder";
+        this.leafCssClass = "xq-tree-leaf";
+        this.folderNameCssClass = "xq-tree-folderName";
+        this.leafNameCssClass = "xq-tree-leafName";
+        this.hiddenCssClass = "xq-tree-hidden";
+        this.selectedCssClass = "xq-selected";
 
         // event
         this.onLeafClick = null;
@@ -141,10 +144,10 @@ class TreeView {
 
     #setupEvents() {
         //group name onclick
-        const groupNameEs = document.querySelectorAll("span.folderName");
+        const groupNameEs = document.querySelectorAll(`span.${this.folderNameCssClass}`);
         groupNameEs.forEach((groupNameE) => {
             groupNameE.addEventListener("click", (e) => {
-                groupNameE.parentElement.querySelector('ul').classList.toggle('hidden');
+                groupNameE.parentElement.querySelector('ul').classList.toggle(this.hiddenCssClass);
                 e.stopPropagation();
                 if (this.onFolderClick) {
                     this.onFolderClick(groupNameE.innerHTML);
@@ -153,11 +156,11 @@ class TreeView {
         });
 
         //leaf name onclick
-        const leafNameEs = document.querySelectorAll("span.leafName");
+        const leafNameEs = document.querySelectorAll(`span.${this.leafNameCssClass}`);
         leafNameEs.forEach((leafNameE) => {
             leafNameE.addEventListener("click", (e) => {
-                leafNameEs.forEach((leafNameE) => { leafNameE.classList.remove("selected"); });
-                leafNameE.classList.add("selected");
+                leafNameEs.forEach((leafNameE) => { leafNameE.classList.remove(this.selectedCssClass); });
+                leafNameE.classList.add(this.selectedCssClass);
                 e.stopPropagation();
                 if (this.onLeafClick) {
                     this.onLeafClick(leafNameE.innerHTML);
