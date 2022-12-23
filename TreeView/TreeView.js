@@ -1,4 +1,4 @@
-//
+//TreeView
 class TreeView {
     constructor(){
         // data
@@ -96,7 +96,7 @@ class TreeView {
         this.folderNameCssClass = "xq-tree-folderName";
         this.leafNameCssClass = "xq-tree-leafName";
         this.hiddenCssClass = "xq-tree-hidden";
-        this.selectedCssClass = "xq-selected";
+        this.selectedCssClass = "xq-tree-selected";
 
         // event
         this.onLeafClick = null;
